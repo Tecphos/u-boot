@@ -158,18 +158,13 @@
 			"fi;\0" \
 
 #define CONFIG_BOOTCOMMAND \
-	"run findfdt;" \
-	"mmc dev ${mmcdev};" \
-	"if mmc rescan; then " \
-		"if run loadbootscript; then " \
-		"run bootscript; " \
-		"else " \
-			"if run loadimage; then " \
-				"run mmcboot; " \
-			"else run netboot; " \
-			"fi; " \
-		"fi; " \
-	"else run netboot; fi"
+	"setenv bootargs "\
+	"'console=ttymxc0,115200 "\
+	"g_mass_storage.stall=0 g_mass_storage.removable=1 g_mass_storage.file=/fat " \
+	"g_mass_storage.ro=1 g_mass_storage.idVendor=0x066F g_mass_storage.idProduct=0x37FF " \
+	"g_mass_storage.iSerialNumber=\"\" enable_wait_mode=off' " \
+	"rdinit=/linuxrc; " \
+	"bootz 12000000 12c00000:7M 18000000;\0" \
 
 #define CONFIG_ARP_TIMEOUT     200UL
 
